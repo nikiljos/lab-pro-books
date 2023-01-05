@@ -1,0 +1,18 @@
+.BookCard{
+    width: 20vw;
+    min-width: 200px;
+    margin: 20px;
+    cursor: pointer;
+}
+
+.BookCard img{
+    width: 80%;
+}
+
+.BookCard .id{
+    background-color: aliceblue;
+    padding: 2px;
+    width: fit-content;
+    border-radius: 2px;
+    margin: 5px auto;
+}

@@ -1,0 +1,7 @@
+.SignUp form{
+    /* margin: 10px auto;
+    max-width: 400px; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

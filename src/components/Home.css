@@ -1,0 +1,7 @@
+.Home > div {
+    margin: 30px;
+}
+.books{
+    display: flex;
+    flex-wrap: wrap;
+}
