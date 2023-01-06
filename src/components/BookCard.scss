@@ -1,0 +1,25 @@
+.BookCard{
+    width: 200px;
+    margin: 10px;
+    /* height: 200px; */
+    cursor: pointer;
+
+    img{
+        object-fit: cover;
+        width: 100%;
+        height: 250px;
+    }
+
+    // .id{
+    //     background-color: aliceblue;
+    //     padding: 2px;
+    //     width: fit-content;
+    //     border-radius: 2px;
+    //     margin: 5px auto;
+    // }
+
+    .authors{
+        font-size: .9rem;
+    }
+}
+

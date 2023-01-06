@@ -1,0 +1,25 @@
+.NavBar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 25px 50px;
+
+    a{
+        text-decoration: none;
+        color: #000000;
+    }
+
+    .logo{
+        font-size: 2rem;
+        font-weight: 500;
+    }
+
+    .btn{
+        a{
+            padding: 8px;
+            font-size: 1.2rem;
+            border: 1px solid #000000;
+            border-radius: 10px;
+        }
+    }
+}

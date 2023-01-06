@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./SignUp.css";
+import "./SignUp.scss";
 
 const SignUp = () => {
   let nameInput = React.createRef();
@@ -13,6 +13,7 @@ const SignUp = () => {
     password: undefined,
   });
   let [passVisibility, changePassVisibility] = useState(true);
+  let [successMessage,setSuccessMessage]=useState(null)
 
   let handleSubmit = (e) => {
     e.preventDefault();
@@ -28,7 +29,10 @@ const SignUp = () => {
     console.log({ status });
     updateErrors(status.error);
     if (status.pass) {
-      alert("Success");
+      setSuccessMessage("Successfully Registered!")
+    }
+    else{
+      setSuccessMessage(null)
     }
   };
 
@@ -75,11 +79,12 @@ const SignUp = () => {
           placeholder="Re-enter password"
           ref={reEnterInput}
         />
-        <div onClick={() => changePassVisibility((prev) => !prev)}>
+        <div onClick={() => changePassVisibility((prev) => !prev)} className="btn">
           {passVisibility ? "Show" : "Hide"}
         </div>
         <p className="error">{errors.password}</p>
         <button type="submit">Sign Up</button>
+        <p className="success">{successMessage}</p>
       </form>
     </div>
   );
