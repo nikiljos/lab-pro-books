@@ -14,12 +14,21 @@
         font-weight: 500;
     }
 
+    .greet{
+        font-size: 1.1rem;
+    }
+
     .btn{
         a{
-            padding: 8px;
+            padding: 5px;
             font-size: 1.2rem;
             border: 1px solid #000000;
-            border-radius: 10px;
+            border-radius: 4px;
+
+            &:hover{
+            background-color: #000000;
+            color:#ffffff
+        }
         }
     }
 }

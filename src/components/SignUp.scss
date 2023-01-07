@@ -1,22 +1,73 @@
 .SignUp{
+
+    .heading{
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin: 30px;
+    }
+
     form{
         margin: 20px auto;
         display: flex;
         flex-direction: column;
-        max-width: 400px;
+        max-width: 300px;
         p{
             font-size: 1rem;
             margin: 10px 0;
         }
     }
 
+    input{
+        font-size: 1.2rem;
+        padding: 5px;
+        outline: none;
+        border: 1px solid #858585;
+        border-left: 0;
+        border-right: 0;
+        border-top: 0;
+        margin: 2px 0;
+    }
+    input:focus{
+        border-color: #000000;
+    }
+
+    .pass-input{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+
+        input{
+            width: 100%;
+        }
+    }
+
     .btn{
         cursor: pointer;
-        margin: 10px;
+        height: 1.2rem;
+        padding: 0 10px;
+
+        img{
+            height: 100%;
+        }
     }
 
     button{
         width: fit-content;
+        background-color: #ffffff;
+        outline: none;
+        border: 1px solid black;
+        padding: 5px;
+        border-radius: 3px;
+        font-size: 1rem;
+        cursor: pointer;
+        margin: 0 auto;
+
+        &:hover{
+            background-color: #000000;
+            color:#ffffff;
+        }
     }
 
     .error{

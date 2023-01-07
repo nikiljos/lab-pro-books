@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './Home.scss'
 import BookCard from './BookCard'
+import searchIcon from '../assets/icons/search.png'
 
 const Home = () => {
 
@@ -12,7 +13,7 @@ const Home = () => {
     "database",
     "react"
   ];
-
+  
   let randomCategory = defaultCategories[Math.floor(Math.random() * defaultCategories.length)];
 
   let [bookList,updateBookList]=useState([])
@@ -28,13 +29,10 @@ const Home = () => {
     fetch(`https://www.googleapis.com/books/v1/volumes?q=${searchQuery}&startIndex=${startIndex}`)
     .then(res=>res.json())
     .then(data=>{
-      console.log(data.items)
       if(data.items&&data.items.length>0){
         let newItems = data.items.map((elt) => {
           let { id } = elt;
-          // console.log(elt)
           let {title,imageLinks,authors}=elt.volumeInfo
-          console.log({ title, imageLinks, authors });
           return {
             id,
             title,
@@ -42,7 +40,6 @@ const Home = () => {
             authors,
           };
         });
-        console.log({newItems})
         updateBookList((prev) => [...prev, ...newItems]);
       }
       else{
@@ -75,8 +72,10 @@ const Home = () => {
     <div className="Home">
       <div className="search">
         <form onSubmit={search}>
-          <input type="text" ref={searchInput} />
-          <button type="submit">Search</button>
+          <input type="text" ref={searchInput} placeholder="Search books..." />
+          <button type="submit">
+            <img src={searchIcon} alt="Search" />
+          </button>
         </form>
       </div>
       <div className="books">
@@ -91,11 +90,21 @@ const Home = () => {
         ))}
       </div>
       <div className="status">
-        <div>Showing {bookList.length} Books</div>
         {!resultEnd ? (
-          loadStatus?"Loading...":<button onClick={loadMore}>View More</button>
+          loadStatus ? (
+            <div className="load-prompt">Loading...</div>
+          ) : (
+            <>
+              <div>Showing {bookList.length} Books</div>
+              <div onClick={loadMore} className="load-prompt btn">
+                View More
+              </div>
+            </>
+          )
         ) : (
-          "All results loaded..."
+          <div className="load-prompt">
+            {bookList.length > 0 ? "All results loaded..." : "No books found 🥲"}
+          </div>
         )}
       </div>
     </div>

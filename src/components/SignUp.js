@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import "./SignUp.scss";
+import showIcon from '../assets/icons/show.png'
+import hideIcon from "../assets/icons/hide.png";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
-const SignUp = () => {
+const SignUp = (props) => {
   let nameInput = React.createRef();
   let emailInput = React.createRef();
   let passInput = React.createRef();
@@ -15,25 +18,34 @@ const SignUp = () => {
   let [passVisibility, changePassVisibility] = useState(true);
   let [successMessage,setSuccessMessage]=useState(null)
 
+  let {loginHandler}=props
+
+  let [urlParams]=useSearchParams()
+  let originURL=urlParams.get("origin")||"/"
+  originURL=(originURL==="/signup"?"/":originURL)
+
+  let navigate=useNavigate()
+
   let handleSubmit = (e) => {
     e.preventDefault();
-    console.log(e)
     let userInput = {
       name: nameInput.current.value,
       email: emailInput.current.value,
       password: passInput.current.value,
       reEnter: reEnterInput.current.value,
     };
-    console.log(userInput);
     let status = inputValidator(userInput);
-    console.log({ status });
     updateErrors(status.error);
-    if (status.pass) {
-      setSuccessMessage("Successfully Registered!")
+    if (!status.pass) {
+      setSuccessMessage(null);
+      return
     }
-    else{
-      setSuccessMessage(null)
-    }
+    setSuccessMessage("Successfully Registered! Redirecting...")
+    loginHandler({
+      loggedIn:true,
+      name:userInput.name
+    })
+    setTimeout(() => navigate(originURL),1000);
   };
 
   let inputValidator = (data) => {
@@ -49,9 +61,8 @@ const SignUp = () => {
       error.name = "Invalid Name";
       pass = false;
     }
-    console.log(emailRegex.test(data.email));
     if (!emailRegex.test(data.email)) {
-      error.email = "Invalid EMail";
+      error.email = "Invalid Email";
       pass = false;
     }
     if (data.password.length < 10) {
@@ -69,22 +80,36 @@ const SignUp = () => {
     <div className="SignUp">
       <div className="heading">Register Now!</div>
       <form onSubmit={handleSubmit}>
+
         <input type="text" placeholder="Name" ref={nameInput} />
         <p className="error">{errors.name}</p>
+
         <input type="text" placeholder="Email" ref={emailInput} />
         <p className="error">{errors.email}</p>
-        <input type="password" placeholder="Pasword" ref={passInput} />
+
+        <div className="pass-input">
+          <input
+            type={passVisibility ? "password" : "text"}
+            placeholder="Pasword"
+            ref={passInput}
+          />
+          <div
+            onClick={() => changePassVisibility((prev) => !prev)}
+            className="btn"
+          >
+            {passVisibility ? <img src={showIcon} alt="Show" /> : <img src={hideIcon} alt="Hide" /> }
+          </div>
+        </div>
         <input
-          type={passVisibility ? "password" : "text"}
+          type="password"
           placeholder="Re-enter password"
           ref={reEnterInput}
         />
-        <div onClick={() => changePassVisibility((prev) => !prev)} className="btn">
-          {passVisibility ? "Show" : "Hide"}
-        </div>
         <p className="error">{errors.password}</p>
+
         <button type="submit">Sign Up</button>
         <p className="success">{successMessage}</p>
+
       </form>
     </div>
   );
