@@ -52,6 +52,8 @@ const SignUp = (props) => {
     let pass = true;
     let emailRegex =
       /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    let passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{10,}$/;
     let error = {
       name: undefined,
       email: undefined,
@@ -65,7 +67,7 @@ const SignUp = (props) => {
       error.email = "Invalid Email";
       pass = false;
     }
-    if (data.password.length < 10) {
+    if(!passwordRegex.test(data.password)) {
       error.password = "Invalid Password";
       pass = false;
     } else if (data.password !== data.reEnter) {

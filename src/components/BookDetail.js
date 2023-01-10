@@ -8,15 +8,20 @@ const BookDetail = () => {
 
   let [detail,setDetail]=useState(null)
   let [loadStatus,updateLoadStatus]=useState(true)
+  let [errorStatus,updateErrorStatus]=useState(false)
   let {id}=useParams()
 
   useEffect(()=>{
+    updateErrorStatus(false);
     updateLoadStatus(true)
     fetch(`https://www.googleapis.com/books/v1/volumes/${id}`)
     .then(res=>res.json())
     .then(data=>{
       updateLoadStatus(false)
       setDetail(data.volumeInfo)
+    })
+    .catch(err=>{
+      updateErrorStatus(true)
     })
   },[id])
 
@@ -72,7 +77,11 @@ const BookDetail = () => {
     }
   }
   else{
-    return <div className="loading">Loading...</div>;
+    return (
+      <div className="loading">
+        {errorStatus ? "Sorry, Some Error Occured 🥲" : "Loading..."}
+      </div>
+    );
   }
 }
 

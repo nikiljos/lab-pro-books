@@ -21,10 +21,12 @@ const Home = () => {
   let [searchQuery,updateSearchQuery]=useState(randomCategory)
   let [resultEnd,updateResultEnd]=useState(false)
   let [loadStatus,updateLoadStatus]=useState(true)
+  let [errorStatus, updateErrorStatus] = useState(false);
 
   let searchInput=React.createRef()
 
   useEffect(()=>{
+    updateErrorStatus(false)
     updateLoadStatus(true)
     fetch(`https://www.googleapis.com/books/v1/volumes?q=${searchQuery}&startIndex=${startIndex}`)
     .then(res=>res.json())
@@ -46,7 +48,9 @@ const Home = () => {
         updateResultEnd(true);
       }
       updateLoadStatus(false)
-      
+    })
+    .catch(err=>{
+      updateErrorStatus(true)
     })
   },[startIndex,searchQuery])
 
@@ -92,7 +96,9 @@ const Home = () => {
       <div className="status">
         {!resultEnd ? (
           loadStatus ? (
-            <div className="load-prompt">Loading...</div>
+            <div className="load-prompt">
+              {errorStatus ? "Sorry, Some Error Occured 🥲" : "Loading..."}
+            </div>
           ) : (
             <>
               <div>Showing {bookList.length} Books</div>
@@ -103,7 +109,9 @@ const Home = () => {
           )
         ) : (
           <div className="load-prompt">
-            {bookList.length > 0 ? "All results loaded..." : "No books found 🥲"}
+            {bookList.length > 0
+              ? "All results loaded..."
+              : "No books found 🥲"}
           </div>
         )}
       </div>
