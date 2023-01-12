@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './Home.scss'
 import BookCard from './BookCard'
 import searchIcon from '../assets/icons/search.png'
+import axios from 'axios'
 
 const Home = () => {
 
@@ -28,8 +29,8 @@ const Home = () => {
   useEffect(()=>{
     updateErrorStatus(false)
     updateLoadStatus(true)
-    fetch(`https://www.googleapis.com/books/v1/volumes?q=${searchQuery}&startIndex=${startIndex}`)
-    .then(res=>res.json())
+    axios.get(`https://www.googleapis.com/books/v1/volumes?q=${searchQuery}&startIndex=${startIndex}`)
+    .then(res=>res.data)
     .then(data=>{
       if(data.items&&data.items.length>0){
         let newItems = data.items.map((elt) => {

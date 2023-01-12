@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import './BookDetail.scss'
 import defaultThumbImg from "../assets/default-cover.webp";
 import NotFound from './NotFound';
+import axios from 'axios';
 
 const BookDetail = () => {
 
@@ -14,8 +15,8 @@ const BookDetail = () => {
   useEffect(()=>{
     updateErrorStatus(false);
     updateLoadStatus(true)
-    fetch(`https://www.googleapis.com/books/v1/volumes/${id}`)
-    .then(res=>res.json())
+    axios.get(`https://www.googleapis.com/books/v1/volumes/${id}`)
+    .then(res=>res.data)
     .then(data=>{
       updateLoadStatus(false)
       setDetail(data.volumeInfo)
